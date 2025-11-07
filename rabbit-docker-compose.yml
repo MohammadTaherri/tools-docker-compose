@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  rabbitmq:
+    image: rabbitmq:4.1.4-management-alpine   # RabbitMQ 4.x with Management UI (Alpine-based)
+    container_name: rabbitmq
+    restart: unless-stopped                   # Automatically restart if container crashes
+    ports:
+      - "5672:5672"     # AMQP port for apps
+      - "15672:15672"   # Web Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: Mohammad             # Default login username
+      RABBITMQ_DEFAULT_PASS: 123456         # Default login password
+      RABBITMQ_DEFAULT_VHOST: /               # Default virtual host (optional)
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq       # Persistent data (queues, users, etc.)
+
+volumes:
+  rabbitmq_data:                              # Named volume for persistent storage
